@@ -69,28 +69,39 @@ public class USACO {
     File file = new File(filename);
     Scanner scanner = new Scanner(file);
     String line = scanner.nextLine();
-    String[] variables = line.split(" ", -1);
+    String[] variables = line.split(" ", -2);
     int n = Integer.parseInt(variables[0]);
     int m = Integer.parseInt(variables[1]);
     int t = Integer.parseInt(variables[2]);
     int[][] pasture = new int[n][m];
-    for (int i = 0; i < n; i++) {
-      line = scanner.nextLine();
-      String[] pastureText = line.split(" ", -1);
-      for (int j = 0; j < pastureText.length; j++) {
-        if (pastureText[j].equals("."))
-          pasture[i][j] = 0;
-        else pasture[i][j] = -1;
+    String[][] board = new String[n][m];
+    int[][] moves = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    String tempp = "";
+    String temppp = "";
+    while (scanner.hasNextLine()) {
+      tempp = scanner.nextLine();
+      temppp += tempp;
+    }
+    int counter = 0;
+    for(int i = 0; i < n; i++){
+      for(int j = 0; j < m; j++){
+        board[i][j] = "" + temppp.charAt(counter); //copying over the values into the board
+        counter++;
       }
     }
-    line = scanner.nextLine();
-    String[] coordinates = line.split(" ", -2);
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        if (board[i][j].equals("*")) {
+          pasture[i][j] = -1;
+        }
+      }
+    }
+    String[] coordinates = tempp.split(" ", -2);
     int startRow = Integer.parseInt(coordinates[0]) - 1;
     int startCol = Integer.parseInt(coordinates[1]) - 1;
     int endRow = Integer.parseInt(coordinates[2]) - 1;
     int endCol = Integer.parseInt(coordinates[3]) - 1;
     int[][] temp = new int[n][m];
-    int[][] moves = {{1,0}, {-1,0}, {0,1}, {0,-1}};
     pasture[startRow][startCol] = 1;
     while (t > 0) {
       for (int i = 0; i < n; i++) {
@@ -100,10 +111,14 @@ public class USACO {
       }
       for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-          for (int k = 0; k < moves.length; k++) {
-            if (i+moves[k][0]<n && j+moves[k][1]<m &&
-                i+moves[k][0]>=0 && j+moves[k][1]>=0)
-              pasture[i][j] += temp[i+moves[k][0]][j+moves[k][1]];
+          if (board[i][j].equals(".")) {
+            pasture[i][j] = 0;
+            for (int k = 0; k < moves.length; k++) {
+              if (i+moves[k][0] < n && j+moves[k][1] < m &&
+                  i+moves[k][0] >= 0 && j+moves[k][1] >= 0 &&
+                  temp[i+moves[k][0]][j+moves[k][1]] != -1)
+                pasture[i][j] += temp[i+moves[k][0]][j+moves[k][1]];
+            }
           }
         }
       }
@@ -111,8 +126,6 @@ public class USACO {
     }
     return pasture[endRow][endCol];
   }
-
-
 
   public static void main(String[] args) {
     try {
@@ -127,16 +140,10 @@ public class USACO {
       System.out.println(silver("testCases/ctravel.3.in"));
       System.out.println(silver("testCases/ctravel.4.in"));
       System.out.println(silver("testCases/ctravel.5.in"));
-
     }
     catch(FileNotFoundException e) {
       System.out.println("file not found");
     }
   }
-
-
-
-
-
 
 }
