@@ -65,9 +65,35 @@ public class USACO {
     return depth * 72 * 72;
   }
 
-  //public static int silver(String filename) {
+  public static int silver(String filename) {
+    File file = new File(filename);
+    Scanner scanner = new Scanner(file);
+    String line = sanner.nextLine();
+    String[] variables = line.split(" ", -1);
+    int n = Integer.parseInt(variables[0]);
+    int m = Integer.parseInt(variables[1]);
+    int t = Integer.parseInt(variables[2]);
+    char[][] pasture = new char[n][m];
+    for (int i = 0; i < r; i++) {
+      line = scanner.nextLine();
+      String[] pastureText = line.split(" ", -1);
+      for (int j = 0; j < pastureText.length; j++) {
+        pasture[i][j] = pastureNumbers[j].charAt(j);
+      }
+    }
+    int temp = 0;
+    while (scanner.hasNextLine()){
+      line = scanner.nextLine();
+      String[] coordinates = line.split(" ", -2);
+    }
+    int startRow = Integer.parseInt(coordinates[0]);
+    int startCol = Integer.parseInt(coordinates[1]);
+    int endRow = Integer.parseInt(coordinates[2]);
+    int endCol = Integer.parseInt(coordinates[3]);
 
-  //}
+  }
+
+
   public static void main(String[] args) {
     try {
       System.out.println(bronze("testCases/makelake.1.in"));
