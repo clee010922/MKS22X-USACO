@@ -7,7 +7,7 @@ public class USACO {
     File file = new File(filename);
     Scanner scanner = new Scanner(file);
     String line = scanner.nextLine();
-    String[] variables = line.split(" ", -1);
+    String[] variables = line.split(" ", -2);
     int depth = 0;
     int r = Integer.parseInt(variables[0]);
     int c = Integer.parseInt(variables[1]);
@@ -16,32 +16,34 @@ public class USACO {
     int[][] pasture = new int[r][c];
     for (int i = 0; i < r; i++) {
       line = scanner.nextLine();
-      String[] pastureNumbers = line.split(" ", -1);
+      String[] pastureNumbers = line.split(" ", -2);
       for (int j = 0; j < pastureNumbers.length; j++) {
         pasture[i][j] = Integer.parseInt(pastureNumbers[j]);
       }
     }
     int[][] stomps = new int[n][3];
-    for (int i = 0; i < n; i++) {
+    int temp = 0;
+    while (scanner.hasNextLine()){
       line = scanner.nextLine();
-      String[] stompInstructions = line.split(" ", -1);
-      for (int j = 0; i < stompInstructions.length; j++) {
-        stomps[i][j] = Integer.parseInt(stompInstructions[j]);
+      String[] stompInstructions = line.split(" ", -2);
+      for (int j = 0; j < stompInstructions.length; j++) {
+        stomps[temp][j] = Integer.parseInt(stompInstructions[j]);
       }
+      temp++;
     }
     for (int i = 0; i < stomps.length; i++) {
       int startRow = stomps[i][0];
       int startCol = stomps[i][1];
       int maxHeight = 0;
-      for (int row = startRow-1; row <= startRow+1; r++) {
-        for (int col = startCol-1; col <= startCol+1; c++) {
+      for (int row = startRow-1; row <= startRow+1; row++) {
+        for (int col = startCol-1; col <= startCol+1; col++) {
           if (pasture[row][col] > maxHeight)
             maxHeight = pasture[row][col];
         }
       }
       maxHeight -= stomps[i][2];
-      for (int row = startRow-1; row <= startRow+1; r++) {
-        for (int col = startCol-1; col <= startCol+1; c++) {
+      for (int row = startRow-1; row <= startRow+1; row++) {
+        for (int col = startCol-1; col <= startCol+1; col++) {
           if (pasture[row][col] > maxHeight)
             pasture[row][col] = maxHeight;
         }
@@ -68,7 +70,11 @@ public class USACO {
   //}
   public static void main(String[] args) {
     try {
-      System.out.println(bronze("makelake.1.in"));
+      System.out.println(bronze("testCases/makelake.1.in"));
+      System.out.println(bronze("testCases/makelake.2.in"));
+      System.out.println(bronze("testCases/makelake.3.in"));
+      System.out.println(bronze("testCases/makelake.4.in"));
+      System.out.println(bronze("testCases/makelake.5.in"));
     }
     catch(FileNotFoundException e) {
       System.out.println("file not found");
