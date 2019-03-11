@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+
 public class USACO {
 
   public static int bronze(String filename) throws FileNotFoundException {
@@ -7,11 +8,11 @@ public class USACO {
     Scanner scanner = new Scanner(file);
     String line = scanner.nextLine();
     String[] variables = line.split(" ", -1);
+    int depth = 0;
     int r = Integer.parseInt(variables[0]);
     int c = Integer.parseInt(variables[1]);
     int e = Integer.parseInt(variables[2]);
     int n = Integer.parseInt(variables[3]);
-    int[][] stomps = new int[n][3];
     int[][] pasture = new int[r][c];
     for (int i = 0; i < r; i++) {
       line = scanner.nextLine();
@@ -20,6 +21,7 @@ public class USACO {
         pasture[i][j] = Integer.parseInt(pastureNumbers[j]);
       }
     }
+    int[][] stomps = new int[n][3];
     for (int i = 0; i < n; i++) {
       line = scanner.nextLine();
       String[] stompInstructions = line.split(" ", -1);
@@ -31,17 +33,17 @@ public class USACO {
       int startRow = stomps[i][0];
       int startCol = stomps[i][1];
       int maxHeight = 0;
-      for (int r = startRow-1; r <= startRow+1; r++) {
-        for (int c = startCol-1; c <= startCol+1; c++) {
-          if (pasture[r][c] > maxHeight)
-            maxHeight = pasture[r][c];
+      for (int row = startRow-1; row <= startRow+1; r++) {
+        for (int col = startCol-1; col <= startCol+1; c++) {
+          if (pasture[row][col] > maxHeight)
+            maxHeight = pasture[row][col];
         }
       }
       maxHeight -= stomps[i][2];
-      for (int r = startRow-1; r <= startRow+1; r++) {
-        for (int c = startCol-1; c <= startCol+1; c++) {
-          if (pasture[r][c] > maxHeight)
-            pasture[r][c] = maxHeight;
+      for (int row = startRow-1; row <= startRow+1; r++) {
+        for (int col = startCol-1; col <= startCol+1; c++) {
+          if (pasture[row][col] > maxHeight)
+            pasture[row][col] = maxHeight;
         }
       }
     }
@@ -64,5 +66,18 @@ public class USACO {
   //public static int silver(String filename) {
 
   //}
+  public static void main(String[] args) {
+    try {
+      System.out.println(bronze("makelake.1.in"));
+    }
+    catch(FileNotFoundException e) {
+      System.out.println("file not found");
+    }
+  }
+
+
+
+
+
 
 }
